@@ -130,7 +130,19 @@ function loadAllNotes() {
 
              function listAllComments(comments) {
                  console.log(comments);
-             }
+                 let container = $('div#' + divBodyId);
+
+
+                 for(let obj = 0; obj < comments.length; obj++){
+                     console.log(comments[obj].comment);
+                     let commentDiv = $('<div>');
+                     commentDiv.text(comments[obj].comment);
+                     container.append(commentDiv);
+                 }
+
+
+
+             };
 
 
 
