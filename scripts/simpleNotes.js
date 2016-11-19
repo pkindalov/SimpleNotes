@@ -96,21 +96,89 @@ function loadAllNotes() {
         for(let note of data){
             //console.log(note._id);
             let divHead = $('<div class="notesHead">');
-            let divBody = $('<div class="notesBody">');
+            let divBodyId = note._id;
+            let divBody = $(`<div class="notesBody" id=${divBodyId}>`);
+
             let commentField = $('<br /><textarea id="comments" rows="5" cols="65"></textarea><br />');
-            let sendComment = $('<button id="sendComment">Add a comment</button>');
+            let sendComment = $(`<button id="${divBodyId}" onclick="addComment(this)">Add a comment</button>`);
 
 
             divHead.text(note.title);
             divBody.text(note.description);
             divBody.append(commentField,sendComment);
 
+
             $('#notes').append(divHead);
             $('#notes').append(divBody);
+
+            //$('div#'+divBodyId +' #sendComment').click(addComment);
+
+
+            //Load comments module
+            let allCommentsQuery = {
+                method: "GET",
+                url: baseService + "/comments/",
+                headers: authHeaders
+            };
+
+
+            $.ajax(allCommentsQuery)
+                .then(listAllComments)
+                .catch(displayError);
+
+
+             function listAllComments(comments) {
+                 console.log(comments);
+             }
+
+
+
+
         }
     }
 
 }
+
+
+
+function addComment(divBodyId) {
+    let commentId = divBodyId.id;
+    let commentElem = "#" + commentId;
+    let comment = $(commentElem + ' #comments').val();
+
+    let data = {comment: comment, post_id: commentId}
+
+    let sendCommentQuery = {
+        method: "POST",
+        url: baseService + "/comments",
+        headers: authHeaders,
+        data: data
+    };
+
+
+    $.ajax(sendCommentQuery)
+        .then(addCommentSuccessfull)
+        .catch(displayError);
+
+
+    function addCommentSuccessfull(data) {
+        let containerId = "div#" + data.post_id;
+        let container = $(containerId + " #comments" );
+        let div = $('<div>');
+        div.text(data.comment);
+        container.prepend(div);
+
+        //console.log(data.post_id);
+    }
+
+    // //console.log(divBodyId.id);
+    // alert(commentId);
+    //alert(comment);
+
+
+}
+
+
 
 
 
