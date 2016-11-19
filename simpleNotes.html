@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Simple notes</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="styles/mainStyles.css" />
+</head>
+<body>
+    <div id="notesHeader">
+        <div id="noteForm">
+            <p>Заглавие на бележката: <input type="text" id="noteTitle" /></p>
+            <p>Описание:<br /><textarea id="noteBody" rows="7" cols="100"></textarea></p>
+            <p>
+                <button id="send">Изпрати</button>
+                <button id="clearForm">Изчисти</button>
+                <button id="loadNotes">Зареди всички бележки</button>
+                <!--<button id="showHideNotes">Покажи/Скрий бележките</button>-->
+            </p>
+        </div>
+
+
+    </div>
+
+
+    <div id="notes">
+
+    </div>
+
+<script type="text/javascript" src="scripts/simpleNotes.js"></script>
+</body>
+</html>

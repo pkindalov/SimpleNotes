@@ -1,0 +1,58 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+
+#notesHeader, #notes{
+    font-family: 'Roboto', sans-serif;
+    font-size: 20px;
+    width: 60%;
+    height: auto;
+    background-color: #66CCFF;
+    border-radius: 10px;
+    margin: 0 auto;
+    margin-top: 1%;
+    padding-left: 3%;
+    padding-top: 1%;
+    padding-bottom: 2%;
+}
+
+#notes{
+    margin-bottom: 2%;
+}
+
+
+
+#noteForm{
+
+}
+
+#noteTitle{
+    width: 85%;
+    height: 30px;
+}
+
+
+button{
+    width: 20%;
+    height: 50px;
+}
+
+.notesHead{
+    border: 1px solid white;
+    border-radius: 10px;
+    background-color: whitesmoke;
+    margin-right: 2%;
+    margin-top: 2%;
+    margin-bottom: 3%;
+    padding: 2%;
+    text-align: center;
+}
+
+.notesBody{
+    border: 1px solid black;
+    font-size: 15px;
+    border-radius: 10px;
+    margin-right: 2%;
+    padding-left: 2%;
+    padding-top: 4%;
+    padding-bottom: 4%;
+
+}
