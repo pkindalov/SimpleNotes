@@ -39,7 +39,7 @@ function send() {
 
 
     $.ajax(sendRequest)
-        .then(displayNotes)
+        .then(loadAllNotes)
         .catch(displayError);
     // $.post(baseService + "/posts")
     //     .then(displayNotes)
@@ -103,12 +103,13 @@ function loadAllNotes() {
 
             let commentField = $('<br /><textarea id="comments" rows="5" cols="65"></textarea><br />');
             let sendComment = $(`<button id="${divBodyId}" onclick="addComment(this)">Добави коментар</button>`);
+            let showHideComments = $(`<button id="${divBodyId}" onclick="showHideComments(this)">Скрий/Покажи</button>`);
 
 
             divHead.text(note.title);
             //divBody.text(note.description);
 
-            divBody.append(descrCont,commentField,sendComment);
+            divBody.append(descrCont,commentField,sendComment, showHideComments);
 
 
             $('#notes').append(divHead);
@@ -153,6 +154,13 @@ function loadAllNotes() {
 
 }
 
+function showHideComments(divBodyId) {
+    let commentId = divBodyId.id;
+    let commentElem = "#" + commentId + " .commentsCont";
+    $(commentElem).toggle();
+}
+
+
 
 
 function addComment(divBodyId) {
@@ -171,8 +179,14 @@ function addComment(divBodyId) {
 
 
     $.ajax(sendCommentQuery)
-        .then(addCommentSuccessfull)
+        .then(loadAllNotes)
         .catch(displayError);
+
+
+
+
+
+
 
 
     function addCommentSuccessfull(data) {

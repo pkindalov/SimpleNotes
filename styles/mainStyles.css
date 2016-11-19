@@ -2,7 +2,7 @@
 
 #notesHeader, #notes{
     font-family: 'Roboto', sans-serif;
-    font-size: 20px;
+    font-size: 23px;
     width: 60%;
     height: auto;
     background-color: #66CCFF;
@@ -64,6 +64,12 @@ button{
     margin-top: 2%;
     padding-top: 1%;
     padding-bottom: 3%;
+    padding-left: 2%;
     background-color: #3399CC;
     width: 90%;
+    line-height: 1.5;
+}
+
+.descrCont{
+    font-size: 23px;
 }
