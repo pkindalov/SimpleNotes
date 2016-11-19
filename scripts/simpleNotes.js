@@ -113,11 +113,12 @@ function loadAllNotes() {
 
             //$('div#'+divBodyId +' #sendComment').click(addComment);
 
+            //console.log(note);
 
             //Load comments module
             let allCommentsQuery = {
                 method: "GET",
-                url: baseService + "/comments/",
+                url: baseService + `/comments/?query={"post_id":"${divBodyId}"}`,
                 headers: authHeaders
             };
 
