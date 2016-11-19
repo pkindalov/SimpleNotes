@@ -47,7 +47,7 @@ button{
 }
 
 .notesBody{
-    border: 1px solid black;
+    border: 1px solid #3399CC;
     font-size: 15px;
     border-radius: 10px;
     margin-right: 2%;
@@ -55,4 +55,15 @@ button{
     padding-top: 4%;
     padding-bottom: 4%;
 
+}
+
+
+.commentsCont{
+    border: 1px solid #3399CC;
+    border-radius: 10px;
+    margin-top: 2%;
+    padding-top: 1%;
+    padding-bottom: 3%;
+    background-color: #3399CC;
+    width: 90%;
 }

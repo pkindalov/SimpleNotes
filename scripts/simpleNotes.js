@@ -98,14 +98,17 @@ function loadAllNotes() {
             let divHead = $('<div class="notesHead">');
             let divBodyId = note._id;
             let divBody = $(`<div class="notesBody" id=${divBodyId}>`);
+            let descrCont = $('<div class="descrCont">');
+            descrCont.text(note.description);
 
             let commentField = $('<br /><textarea id="comments" rows="5" cols="65"></textarea><br />');
-            let sendComment = $(`<button id="${divBodyId}" onclick="addComment(this)">Add a comment</button>`);
+            let sendComment = $(`<button id="${divBodyId}" onclick="addComment(this)">Добави коментар</button>`);
 
 
             divHead.text(note.title);
-            divBody.text(note.description);
-            divBody.append(commentField,sendComment);
+            //divBody.text(note.description);
+
+            divBody.append(descrCont,commentField,sendComment);
 
 
             $('#notes').append(divHead);
@@ -115,7 +118,6 @@ function loadAllNotes() {
 
             //console.log(note);
 
-            //Load comments module
             let allCommentsQuery = {
                 method: "GET",
                 url: baseService + `/comments/?query={"post_id":"${divBodyId}"}`,
@@ -129,13 +131,12 @@ function loadAllNotes() {
 
 
              function listAllComments(comments) {
-                 console.log(comments);
+                 //console.log(comments);
                  let container = $('div#' + divBodyId);
 
-
                  for(let obj = 0; obj < comments.length; obj++){
-                     console.log(comments[obj].comment);
-                     let commentDiv = $('<div>');
+                     //console.log(comments[obj].comment);
+                     let commentDiv = $('<div class="commentsCont">');
                      commentDiv.text(comments[obj].comment);
                      container.append(commentDiv);
                  }
