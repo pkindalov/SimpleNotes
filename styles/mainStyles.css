@@ -35,6 +35,10 @@ button{
     height: 50px;
 }
 
+textarea, input, button{
+    border-radius: 10px;
+}
+
 .notesHead, .successAdded, .error{
     border: 1px solid white;
     border-radius: 10px;
