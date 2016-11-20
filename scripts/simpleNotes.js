@@ -27,6 +27,13 @@ function send() {
 
     let title = $('#noteTitle').val();
     let description = $('#noteBody').val();
+    let valid = validate();
+
+    if(!valid){
+        return;
+    }
+    
+
     let data = {title: title, description: description};
 
 
@@ -239,5 +246,62 @@ function successfullAdded(str) {
 }
 
 
+
+function validate() {
+
+    let noteHead = $('#noteTitle').val();
+    let noteBody = $('#noteBody').val();
+
+    if(noteHead == "" || noteHead == " " || noteHead.trim() == ""){
+        $('#noteTitle').css({'border-color' :'red',
+                             'background-color' : 'red'});
+        alert("Заглавието не може да бъде празно");
+        return false;
+    }else {
+        $('#noteTitle').css({'border-color' :'',
+            'background-color' : ''});
+    }
+
+
+    if(noteHead.length == 1 || noteHead.length < 5){
+        $('#noteTitle').css({'border-color' :'red',
+            'background-color' : 'red'});
+        alert("Заглавието е твърде късо. Минимум 5 знака");
+        return false;
+    }else {
+        $('#noteTitle').css({'border-color' :'',
+            'background-color' : ''});
+    }
+
+
+
+    if(noteBody == "" || noteBody == " " || noteBody.trim() == ""){
+        $('#noteBody').css({'border-color':'red',
+                            'background-color':'red'});
+        alert("Описанието не може да бъде празно");
+        return false;
+    }else {
+        $('#noteBody').css({'border-color':'',
+            'background-color':''});
+    }
+
+    if(noteBody.length == 1 || noteBody.length < 5){
+        $('#noteBody').css({'border-color' :'red',
+            'background-color' : 'red'});
+        alert("Описанието е твърде късо. Минимум 5 знака");
+        return false;
+    }else {
+        $('#noteBody').css({'border-color' :'',
+            'background-color' : ''});
+    }
+
+    return true;
+
+
+
+
+
+
+}
 
 
