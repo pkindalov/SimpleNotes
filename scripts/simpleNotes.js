@@ -41,14 +41,11 @@ function send() {
     $.ajax(sendRequest)
         .then(loadAllNotes)
         .catch(displayError);
-    // $.post(baseService + "/posts")
-    //     .then(displayNotes)
-    //     .catch(displayError);
 
     
     function displayNotes(response) {
         console.log(response);
-        //$('#notes').empty();
+
         $('#notes').show();
         console.log(response.title);
         console.log(response.description);
@@ -68,14 +65,27 @@ function send() {
 
 }
 
-function displayError() {
+function displayError(str) {
     //TODO
+    let div = $('<div class="error">');
+    div.text("Error with adding note.");
+    let container = $('#notesHeader');
+    container.prepend(div);
+
+    $('.error').fadeOut(3000);
 }
 
 
 
 function loadAllNotes() {
     $('#notes').empty();
+
+    //TODO
+
+    successfullAdded("Note");
+
+
+
 
     let loadQuery = {
         method: "GET",
@@ -90,11 +100,9 @@ function loadAllNotes() {
 
 
     function listAllPosts(data) {
-        //console.log(data);
         $('#notes').show();
 
         for(let note of data){
-            //console.log(note._id);
             let divHead = $('<div class="notesHead">');
             let divBodyId = note._id;
             let divBody = $(`<div class="notesBody" id=${divBodyId}>`);
@@ -107,17 +115,13 @@ function loadAllNotes() {
 
 
             divHead.text(note.title);
-            //divBody.text(note.description);
-
             divBody.append(descrCont,commentField,sendComment, showHideComments);
 
 
             $('#notes').append(divHead);
             $('#notes').append(divBody);
 
-            //$('div#'+divBodyId +' #sendComment').click(addComment);
 
-            //console.log(note);
 
             let allCommentsQuery = {
                 method: "GET",
@@ -132,28 +136,12 @@ function loadAllNotes() {
 
 
              function listAllComments(comments) {
-                 //console.log(comments.length);
                  let container = $('div#' + divBodyId);
 
-                 // if(comments.length == 0){
-                 //   let hideTextArea = "#" + divBodyId + " #comments";
-                 //   let sendCommentToHide = "#" + divBodyId + " button";
-                 //   let buttonForShowAddComment =  $(`<button id="${divBodyId}" onclick="showAddCommentBtn(this)">Добави коментар</button>`);
-                 //   let containerForBtn = "#" + divBodyId;
-                 //   $(containerForBtn).append(buttonForShowAddComment);
-                 //   $(sendCommentToHide).hide();
-                 //   $(hideTextArea).hide();
-                 // }
 
 
                  for(let obj = 0; obj < comments.length; obj++){
-                     //console.log(comments[obj].comment);
-                     //console.log(obj.length);
-                    // if(comments[obj].comment.length === 0){
-                    //     let hideTextArea = "#" + divBodyId + " #comments";
-                    //     console.log(hideTextArea);
-                    //     $(hideTextArea).hide();
-                    // }
+
 
                      let commentDiv = $('<div class="commentsCont">');
                      commentDiv.text(comments[obj].comment);
@@ -163,6 +151,10 @@ function loadAllNotes() {
 
 
              };
+
+
+
+
 
 
 
@@ -237,6 +229,14 @@ function addComment(e,divBodyId) {
 
 
 
+function successfullAdded(str) {
+    let div = $('<div class="successAdded">');
+    div.text(str + " added successfully");
+    let container = $('#notesHeader');
+    container.prepend(div);
+
+    $('.successAdded').fadeOut(3000);
+}
 
 
 
