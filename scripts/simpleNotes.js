@@ -102,7 +102,7 @@ function loadAllNotes() {
             descrCont.text(note.description);
 
             let commentField = $('<br /><textarea id="comments" rows="5" cols="65"></textarea><br />');
-            let sendComment = $(`<button id="${divBodyId}" onclick="addComment(this)">Добави коментар</button>`);
+            let sendComment = $(`<button id="${divBodyId}" onclick="addComment(event,this)">Добави коментар</button>`);
             let showHideComments = $(`<button id="${divBodyId}" onclick="showHideComments(this)">Скрий/Покажи</button>`);
 
 
@@ -132,11 +132,29 @@ function loadAllNotes() {
 
 
              function listAllComments(comments) {
-                 //console.log(comments);
+                 //console.log(comments.length);
                  let container = $('div#' + divBodyId);
+
+                 // if(comments.length == 0){
+                 //   let hideTextArea = "#" + divBodyId + " #comments";
+                 //   let sendCommentToHide = "#" + divBodyId + " button";
+                 //   let buttonForShowAddComment =  $(`<button id="${divBodyId}" onclick="showAddCommentBtn(this)">Добави коментар</button>`);
+                 //   let containerForBtn = "#" + divBodyId;
+                 //   $(containerForBtn).append(buttonForShowAddComment);
+                 //   $(sendCommentToHide).hide();
+                 //   $(hideTextArea).hide();
+                 // }
+
 
                  for(let obj = 0; obj < comments.length; obj++){
                      //console.log(comments[obj].comment);
+                     //console.log(obj.length);
+                    // if(comments[obj].comment.length === 0){
+                    //     let hideTextArea = "#" + divBodyId + " #comments";
+                    //     console.log(hideTextArea);
+                    //     $(hideTextArea).hide();
+                    // }
+
                      let commentDiv = $('<div class="commentsCont">');
                      commentDiv.text(comments[obj].comment);
                      container.append(commentDiv);
@@ -163,7 +181,8 @@ function showHideComments(divBodyId) {
 
 
 
-function addComment(divBodyId) {
+function addComment(e,divBodyId) {
+    e.preventDefault();
     let commentId = divBodyId.id;
     let commentElem = "#" + commentId;
     let comment = $(commentElem + ' #comments').val();
@@ -179,7 +198,7 @@ function addComment(divBodyId) {
 
 
     $.ajax(sendCommentQuery)
-        .then(loadAllNotes)
+        .then(addCommentSuccessfull)
         .catch(displayError);
 
 
@@ -188,13 +207,23 @@ function addComment(divBodyId) {
 
 
 
-
+//TODO
     function addCommentSuccessfull(data) {
+        // let containerId = "div#" + data.post_id;
+        //let container = $(containerId + " #comments" );
+        // //let div = $('div.commentsCont');
+        // let container = $(containerId + " .commentsCont");
+        // let commentDiv = $('<div class="commentsCont">');
+        // commentDiv.text(data.comment);
+        //  container.prepend(commentDiv);
+
+
         let containerId = "div#" + data.post_id;
-        let container = $(containerId + " #comments" );
-        let div = $('<div>');
+        let div = $('<div class="commentsCont">');
         div.text(data.comment);
-        container.prepend(div);
+        let container = $(containerId);
+        container.append(div);
+
 
         //console.log(data.post_id);
     }
