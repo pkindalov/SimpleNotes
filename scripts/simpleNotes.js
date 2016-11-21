@@ -73,7 +73,6 @@ function send() {
 }
 
 function displayError(str) {
-    //TODO
     let div = $('<div class="error">');
     div.text("Error with adding note.");
     let container = $('#notesHeader');
@@ -87,7 +86,6 @@ function displayError(str) {
 function loadAllNotes() {
     $('#notes').empty();
 
-    //TODO
 
     successfullAdded("Note");
 
@@ -174,7 +172,7 @@ function loadAllNotes() {
 function showHideComments(divBodyId) {
     let commentId = divBodyId.id;
     let commentElem = "#" + commentId + " .commentsCont";
-    $(commentElem).toggle();
+    $(commentElem).toggle(3000);
 }
 
 
@@ -204,18 +202,7 @@ function addComment(e,divBodyId) {
 
 
 
-
-
-//TODO
     function addCommentSuccessfull(data) {
-        // let containerId = "div#" + data.post_id;
-        //let container = $(containerId + " #comments" );
-        // //let div = $('div.commentsCont');
-        // let container = $(containerId + " .commentsCont");
-        // let commentDiv = $('<div class="commentsCont">');
-        // commentDiv.text(data.comment);
-        //  container.prepend(commentDiv);
-
 
         let containerId = "div#" + data.post_id;
         let div = $('<div class="commentsCont">');
@@ -224,12 +211,10 @@ function addComment(e,divBodyId) {
         container.append(div);
 
 
-        //console.log(data.post_id);
+
     }
 
-    // //console.log(divBodyId.id);
-    // alert(commentId);
-    //alert(comment);
+
 
 
 }
@@ -238,7 +223,7 @@ function addComment(e,divBodyId) {
 
 function successfullAdded(str) {
     let div = $('<div class="successAdded">');
-    div.text(str + " added successfully");
+    div.text(str + " added/loaded successfully");
     let container = $('#notesHeader');
     container.prepend(div);
 
