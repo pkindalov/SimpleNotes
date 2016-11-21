@@ -87,3 +87,8 @@ textarea, input, button{
     border: 1px solid #CC0000;
     background-color: #CC0000;
 }
+
+.commentsEditField{
+    padding-top: 5%;
+}
+
