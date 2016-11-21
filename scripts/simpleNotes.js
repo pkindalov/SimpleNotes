@@ -150,6 +150,20 @@ function loadAllNotes() {
 
                      let commentDiv = $('<div class="commentsCont">');
                      commentDiv.text(comments[obj].comment);
+                     let editBox = $(`<div class="commentsEditField"><textarea id="${divBodyId}" rows="3" cols="50">${comments[obj].comment}</textarea></div>`);
+                     //TODO
+                     let btnShowEdit = $(`<div><button id="${divBodyId}" onclick="showEditForm(this)">Редакция</button></div>`);
+
+                     let buttonsContainer = $("<div class='editControls'>");
+                     //TODO
+                     let btnEdit = $(`<button id="${divBodyId}" onclick="editComment(this)">Редактирай</button>`);
+                     //TODO
+                     let btnRejectEdit= $(`<button id="${divBodyId}" onclick="rejectEdit(this)">Отказ</button>`);
+                     buttonsContainer.append(btnEdit,btnRejectEdit);
+
+                     editBox.append(buttonsContainer);
+
+                     commentDiv.append(btnShowEdit,editBox);
                      container.append(commentDiv);
                  }
 
