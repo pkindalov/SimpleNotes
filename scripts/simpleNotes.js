@@ -5,6 +5,8 @@
 $('#notes').hide();
 
 
+
+
 const appId = "kid_B1l6AL3bg";
 const baseService = "https://baas.kinvey.com/appdata/" + appId;
 const appUsername = "notesapp";
@@ -141,35 +143,40 @@ function loadAllNotes() {
 
 
              function listAllComments(comments) {
+
                  let container = $('div#' + divBodyId);
 
 
 
                  for(let obj = 0; obj < comments.length; obj++){
+                     //console.log(comments[obj]._id);
+                     let commentID = comments[obj]._id;
 
 
                      let commentDiv = $('<div class="commentsCont">');
                      commentDiv.text(comments[obj].comment);
-                     let editBox = $(`<div class="commentsEditField"><textarea id="${divBodyId}" rows="3" cols="50">${comments[obj].comment}</textarea></div>`);
+                     let editBox = $(`<div id="${commentID}" class="commentsEditField"><textarea id="${commentID}" rows="3" cols="50">${comments[obj].comment}</textarea></div>`);
                      //TODO
-                     let btnShowEdit = $(`<div><button id="${divBodyId}" onclick="showEditForm(this)">Редакция</button></div>`);
+                     let btnShowEdit = $(`<div><button id="${commentID}" onclick="showEditForm(this)">Редакция</button></div>`);
 
-                     let buttonsContainer = $("<div class='editControls'>");
+                     let buttonsContainer = $(`<div id="${commentID}" class="editControls">`);
                      //TODO
-                     let btnEdit = $(`<button id="${divBodyId}" onclick="editComment(this)">Редактирай</button>`);
+                     let btnEdit = $(`<button id="${commentID}" onclick="editComment(this)">Редактирай</button>`);
                      //TODO
-                     let btnRejectEdit= $(`<button id="${divBodyId}" onclick="rejectEdit(this)">Отказ</button>`);
+                     let btnRejectEdit= $(`<button id="${commentID}" onclick="rejectEdit(this)">Отказ</button>`);
                      buttonsContainer.append(btnEdit,btnRejectEdit);
 
                      editBox.append(buttonsContainer);
 
                      commentDiv.append(btnShowEdit,editBox);
                      container.append(commentDiv);
+
+                     $('.commentsEditField, .editControls').hide();
                  }
 
 
 
-             };
+             }
 
 
 
@@ -187,6 +194,26 @@ function showHideComments(divBodyId) {
     let commentId = divBodyId.id;
     let commentElem = "#" + commentId + " .commentsCont";
     $(commentElem).toggle(3000);
+}
+
+
+function showEditForm(commentID) {
+    let commentId = commentID.id;
+    //console.log(commentId);
+    let commentElem = "#" + commentId + ".commentsEditField";
+    //console.log(commentElem);
+    let editButtons = "#" + commentId + ".editControls";
+    $(commentElem).toggle(3000);
+    $(editButtons).toggle(3000);
+}
+
+
+function rejectEdit(commentID) {
+    let commentId = commentID.id;
+    let commentElem = "#" + commentId + ".commentsEditField";
+    let editButtons = "#" + commentId + ".editControls";
+    $(commentElem).fadeOut(3000);
+    $(editButtons).fadeOut(3000);
 }
 
 
