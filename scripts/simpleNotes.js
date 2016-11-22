@@ -107,10 +107,11 @@ function loadAllNotes() {
             let commentField = $('<br /><textarea id="comments" rows="5" cols="65"></textarea><br />');
             let sendComment = $(`<button id="${divBodyId}" onclick="addComment(event,this)">Добави коментар</button>`);
             let showHideComments = $(`<button id="${divBodyId}" onclick="showHideComments(this)">Скрий/Покажи</button>`);
+            let divCommentsCount = $("<div>0</div>");
 
 
             divHead.text(note.title);
-            divBody.append(descrCont,commentField,sendComment, showHideComments);
+            divBody.append(descrCont,commentField,sendComment, showHideComments, divCommentsCount);
 
 
             $('#notes').append(divHead);
@@ -139,7 +140,8 @@ function loadAllNotes() {
                  for(let obj = 0; obj < comments.length; obj++){
                      //console.log(comments[obj]._id);
                      let commentID = comments[obj]._id;
-
+                     let commentsCount = comments.length;
+                     $(divCommentsCount).text(commentsCount);
 
 
                      let commentDiv = $(`<div id="${commentID}" class="commentsCont">`);
