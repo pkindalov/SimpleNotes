@@ -138,7 +138,7 @@ function loadAllNotes() {
 
 
 
-                     let commentDiv = $('<div class="commentsCont">');
+                     let commentDiv = $(`<div id="${commentID}" class="commentsCont">`);
                      commentDiv.text(comments[obj].comment);
                      let editBox = $(`<div id="${commentID}" class="commentsEditField"><textarea id="${commentID}" rows="3" cols="50">${comments[obj].comment}</textarea></div>`);
 
@@ -146,7 +146,7 @@ function loadAllNotes() {
 
                      let buttonsContainer = $(`<div id="${commentID}" class="editControls">`);
                      //TODO
-                     let btnEdit = $(`<button id="${commentID}" onclick="editComment(this, '${divBodyId}')">Редактирай</button>`);
+                     let btnEdit = $(`<button id="${commentID}" onclick="editComment(this, '${divBodyId}', event)">Редактирай</button>`);
 
                      let btnRejectEdit= $(`<button id="${commentID}" onclick="rejectEdit(this)">Отказ</button>`);
                      buttonsContainer.append(btnEdit,btnRejectEdit);
@@ -197,7 +197,8 @@ function showHideComments(divBodyId) {
 
 
 
-function editComment(commentID, divBodyId) {
+function editComment(commentID, divBodyId,event) {
+    event.preventDefault();
     let commentId = commentID.id;
     let currentPost = divBodyId;
 
@@ -224,9 +225,12 @@ function editComment(commentID, divBodyId) {
 
     //TODO
     function changeCurrentComment(response) {
-        alert("Changes was successfull");
-        let commentElem = "#" + commentId;
-        $(commentElem).val(newComment);
+        //console.log(response.comment);
+        //let commentDiv = $(`<div id="${commentID}" class="commentsCont">`);
+        let commentElem = $('#' +commentId + '.commentsCont');
+        console.log(commentElem);
+
+        $(commentElem).text(response.comment);
     }
 
 
