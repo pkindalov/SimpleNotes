@@ -99,6 +99,10 @@ function loadAllNotes() {
             let divBody = $(`<div class="notesBody" id=${divBodyId}>`);
             let descrCont = $('<div class="descrCont">');
             descrCont.text(note.description);
+            let delimeter = $("<hr />");
+            delimeter.appendTo(descrCont);
+
+            //let commentsCount = note.count;
 
             let commentField = $('<br /><textarea id="comments" rows="5" cols="65"></textarea><br />');
             let sendComment = $(`<button id="${divBodyId}" onclick="addComment(event,this)">Добави коментар</button>`);
@@ -157,6 +161,7 @@ function loadAllNotes() {
                      container.append(commentDiv);
 
                      $('.commentsEditField, .editControls').hide();
+                     $('.commentsCont').hide();
                  }
 
 
