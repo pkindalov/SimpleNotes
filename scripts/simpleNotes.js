@@ -196,7 +196,7 @@ function showHideComments(divBodyId) {
 
 
 
-//TODO
+
 function editComment(commentID, divBodyId) {
     let commentId = commentID.id;
     let currentPost = divBodyId;
@@ -206,6 +206,28 @@ function editComment(commentID, divBodyId) {
     //console.log(commentElem);
     let newComment = $(commentElem).val();
 
+    let data = {comment: newComment, post_id: currentPost};
+
+
+    let editRequest = {
+        method: "PUT",
+        url: baseService + "/comments/" + commentId,
+        headers: authHeaders,
+        data: data
+    };
+
+
+    $.ajax(editRequest)
+        .then(changeCurrentComment)
+        .then(displayError);
+
+
+    //TODO
+    function changeCurrentComment(response) {
+        alert("Changes was successfull");
+        let commentElem = "#" + commentId;
+        $(commentElem).val(newComment);
+    }
 
 
 
