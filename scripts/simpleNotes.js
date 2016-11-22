@@ -52,23 +52,7 @@ function send() {
         .catch(displayError);
 
     
-    function displayNotes(response) {
-        console.log(response);
 
-        $('#notes').show();
-        console.log(response.title);
-        console.log(response.description);
-            let divHead = $('<div class="notesHead">');
-            let divBody = $('<div class="notesBody">');
-
-
-            divHead.text(response.title);
-            divBody.text(response.description);
-
-            $('#notes').append(divHead);
-            $('#notes').append(divBody);
-
-    }
 
 
 
@@ -153,16 +137,17 @@ function loadAllNotes() {
                      let commentID = comments[obj]._id;
 
 
+
                      let commentDiv = $('<div class="commentsCont">');
                      commentDiv.text(comments[obj].comment);
                      let editBox = $(`<div id="${commentID}" class="commentsEditField"><textarea id="${commentID}" rows="3" cols="50">${comments[obj].comment}</textarea></div>`);
-                     //TODO
+
                      let btnShowEdit = $(`<div><button id="${commentID}" onclick="showEditForm(this)">Редакция</button></div>`);
 
                      let buttonsContainer = $(`<div id="${commentID}" class="editControls">`);
                      //TODO
-                     let btnEdit = $(`<button id="${commentID}" onclick="editComment(this)">Редактирай</button>`);
-                     //TODO
+                     let btnEdit = $(`<button id="${commentID}" onclick="editComment(this, '${divBodyId}')">Редактирай</button>`);
+
                      let btnRejectEdit= $(`<button id="${commentID}" onclick="rejectEdit(this)">Отказ</button>`);
                      buttonsContainer.append(btnEdit,btnRejectEdit);
 
@@ -173,6 +158,10 @@ function loadAllNotes() {
 
                      $('.commentsEditField, .editControls').hide();
                  }
+
+
+
+
 
 
 
@@ -190,11 +179,52 @@ function loadAllNotes() {
 
 }
 
+
+
 function showHideComments(divBodyId) {
     let commentId = divBodyId.id;
     let commentElem = "#" + commentId + " .commentsCont";
     $(commentElem).toggle(3000);
 }
+
+
+
+
+
+
+
+
+
+
+//TODO
+function editComment(commentID, divBodyId) {
+    let commentId = commentID.id;
+    let currentPost = divBodyId;
+
+
+    let commentElem = "#" + commentId + ".commentsEditField textarea";
+    //console.log(commentElem);
+    let newComment = $(commentElem).val();
+
+
+
+
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
 
 
 function showEditForm(commentID) {
