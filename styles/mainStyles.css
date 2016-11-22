@@ -92,5 +92,16 @@ textarea, input, button{
     padding-top: 5%;
 }
 
+hr{
+    color: #f5f5f5;
+}
 
-
+.countComm{
+    border-radius: 10px;
+    width: 20%;
+    margin-left: 40%;
+    margin-top: -6.2%;
+    padding-top: 2%;
+    padding-bottom: 2%;
+    text-align: center;
+}
