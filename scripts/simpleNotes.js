@@ -133,6 +133,9 @@ function loadAllNotes() {
 
     function listAllPosts(data) {
         $('#notes').toggle();
+        if(data.length === 0){
+            $('#notes').text('Няма постове.');
+        }
 
         for(let note of data){
             let divHead = $('<div class="notesHead">');
