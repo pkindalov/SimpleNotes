@@ -39,7 +39,7 @@ textarea, input, button{
     border-radius: 10px;
 }
 
-.notesHead, .successAdded, .error{
+.notesHead, .successAdded, .error, .errorBox{
     border: 1px solid white;
     border-radius: 10px;
     background-color: whitesmoke;
@@ -83,9 +83,13 @@ textarea, input, button{
     background-color: #66FF33;
 }
 
-.error{
-    border: 1px solid #CC0000;
+.error, .errorBox{
+    border: none;
     background-color: #CC0000;
+}
+
+.errorBox{
+    display: none;
 }
 
 .commentsEditField{
@@ -104,4 +108,11 @@ hr{
     padding-top: 2%;
     padding-bottom: 15%;
     text-align: center;
+}
+
+
+.countComments, .countPosts{
+    width: 30%;
+    margin-top: -3%;
+    margin-left: 30%;
 }
