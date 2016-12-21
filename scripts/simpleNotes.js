@@ -18,6 +18,7 @@ $('#send').click(send);
 $('#clearForm').click(clearForm);
 $('#loadNotes').click(loadAllNotes);
 $('#deleteAllComments').click(deleteCommentsFromAllPosts);
+$('#deleteAllPosts').click(deleteAllPosts);
 
 
 
@@ -62,23 +63,26 @@ function clearForm() {
 
 function send() {
 
+
     let title = $('#noteTitle').val();
     let description = $('#noteBody').val();
+
+
     let valid = validate();
 
-    if(!valid){
+    if (!valid) {
         return;
     }
-    
+
 
     let data = {title: title, description: description};
 
 
     let sendRequest = {
-      method: "POST",
-      url: baseService + "/posts",
-      headers: authHeaders,
-      data: data
+        method: "POST",
+        url: baseService + "/posts",
+        headers: authHeaders,
+        data: data
     };
 
 
@@ -86,16 +90,17 @@ function send() {
         .then(loadAllNotes)
         .catch(displayError);
 
-    
 
-
-
-
+    clearForm();
 }
+
+
+
 
 function displayError(str) {
     let div = $('<div class="error">');
-    div.text("Error with adding note.");
+    // div.text("Error with adding note.");
+    div.text(str.description);
     let container = $('#notesHeader');
     container.prepend(div);
 
@@ -106,9 +111,10 @@ function displayError(str) {
 
 function loadAllNotes() {
     $('#notes').empty();
+    clearForm();
 
 
-    successfullAdded("Note");
+    //successfullAdded("Note");
 
 
 
@@ -126,7 +132,7 @@ function loadAllNotes() {
 
 
     function listAllPosts(data) {
-        $('#notes').show();
+        $('#notes').toggle();
 
         for(let note of data){
             let divHead = $('<div class="notesHead">');
@@ -143,11 +149,12 @@ function loadAllNotes() {
             let sendComment = $(`<button id="${divBodyId}" onclick="addComment(event,this)">Добави коментар</button>`);
             let showHideComments = $(`<button id="${divBodyId}" onclick="showHideComments(this)">Скрий/Покажи</button>`);
             let deleteAllComments = $(`<button id="${divBodyId}" onclick="deleteAllComments(this)">Изтрии Коментарите</button>`);
+            let deleteThisPost = $(`<button id="${divBodyId}" onclick="deleteThisPost(this)">Изтрий Поста</button>`);
             let divCommentsCount = $("<div class='countComm'>Коментари: 0</div>");
 
 
             divHead.text(note.title);
-            divBody.append(descrCont,commentField,sendComment, showHideComments, deleteAllComments, divCommentsCount);
+            divBody.append(descrCont,commentField,sendComment, showHideComments, deleteAllComments, divCommentsCount, deleteThisPost);
 
 
             $('#notes').append(divHead);
@@ -190,12 +197,14 @@ function loadAllNotes() {
                      //TODO
                      let btnEdit = $(`<button id="${commentID}" onclick="editComment(this, '${divBodyId}', event)">Редактирай</button>`);
 
+                     let btnShowDelete = $(`<button id="${commentID}" onclick="deleteThisComment(this, '${divBodyId}', event)">Изтрии</button>`);
+
                      let btnRejectEdit= $(`<button id="${commentID}" onclick="rejectEdit(this)">Отказ</button>`);
                      buttonsContainer.append(btnEdit,btnRejectEdit);
 
                      editBox.append(buttonsContainer);
 
-                     commentDiv.append(btnShowEdit,editBox);
+                     commentDiv.append(btnShowEdit,btnShowDelete,editBox);
                      container.append(commentDiv);
 
                      $('.commentsEditField, .editControls').hide();
@@ -218,6 +227,7 @@ function loadAllNotes() {
 
 
         }
+
     }
 
 }
@@ -252,6 +262,30 @@ function deleteAllComments(divBodyId) {
 
 
 
+function deleteThisPost(divBodyId) {
+    deleteAllComments(divBodyId);
+    deletePost(divBodyId);
+}
+
+
+function deletePost(divBodyId) {
+    $.ajax({
+        method: "DELETE",
+        url: baseService + "/posts/" + divBodyId.id,
+        headers: authHeaders,
+        success: successDeleteThisPost,
+        error: displayError
+    });
+
+    function successDeleteThisPost(deletePost) {
+        successfullDell("Note");
+        location.reload();
+        loadAllNotes();
+    }
+}
+
+
+
 function deleteCommentsFromAllPosts() {
     let deleteQuery = {
         method: "DELETE",
@@ -265,13 +299,54 @@ function deleteCommentsFromAllPosts() {
 
 
     function successDdeleteCommentsFromAllPosts(deleteComments) {
-        alert("Deleted all " + deleteComments.count + " comments");
-        //location.reload();
+        //alert("Deleted all " + deleteComments.count + " comments");
+        location.reload();
         loadAllNotes();
     }
 }
 
 
+
+function deleteAllPosts() {
+    deleteCommentsFromAllPosts();
+
+    $.ajax({
+        method: "DELETE",
+        url: baseService + '/posts/' + '?query={}',
+        headers: authHeaders,
+        success: successDeleteAllPosts,
+        error: displayError
+    });
+
+
+    function successDeleteAllPosts() {
+        successfullDell("Posts");
+        location.reload();
+        loadAllNotes();
+    }
+}
+
+
+
+
+
+
+function deleteThisComment(commentId) {
+    $.ajax({
+        method: "DELETE",
+        url: baseService + "/comments/" + commentId.id,
+        headers: authHeaders,
+        success: successfullDelThisComment,
+        error: displayError
+    });
+
+    function successfullDelThisComment() {
+        successfullDell("Comment");
+        location.reload();
+        loadAllNotes();
+    }
+    
+}
 
 
 
