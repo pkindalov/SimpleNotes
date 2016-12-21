@@ -17,6 +17,41 @@ const authHeaders = {"Authorization":"Basic " + base64};
 $('#send').click(send);
 $('#clearForm').click(clearForm);
 $('#loadNotes').click(loadAllNotes);
+$('#deleteAllComments').click(deleteCommentsFromAllPosts);
+
+
+
+$.ajax({
+ method: "GET",
+ url: baseService + "/posts",
+ headers: authHeaders,
+ success: loadCountOfPosts,
+ error: displayError
+});
+
+
+function loadCountOfPosts(posts) {
+    $('.countPosts').text(posts.length);
+}
+
+
+
+$.ajax({
+ method: "GET",
+ url: baseService + "/comments",
+ headers: authHeaders,
+ success: loadCountOfAllComments,
+ error: displayError
+});
+
+
+function loadCountOfAllComments(comments) {
+    $('.countComments').text(comments.length);
+}
+
+
+
+
 
 
 function clearForm() {
@@ -107,11 +142,12 @@ function loadAllNotes() {
             let commentField = $('<br /><textarea id="comments" rows="5" cols="65"></textarea><br />');
             let sendComment = $(`<button id="${divBodyId}" onclick="addComment(event,this)">Добави коментар</button>`);
             let showHideComments = $(`<button id="${divBodyId}" onclick="showHideComments(this)">Скрий/Покажи</button>`);
+            let deleteAllComments = $(`<button id="${divBodyId}" onclick="deleteAllComments(this)">Изтрии Коментарите</button>`);
             let divCommentsCount = $("<div class='countComm'>Коментари: 0</div>");
 
 
             divHead.text(note.title);
-            divBody.append(descrCont,commentField,sendComment, showHideComments, divCommentsCount);
+            divBody.append(descrCont,commentField,sendComment, showHideComments, deleteAllComments, divCommentsCount);
 
 
             $('#notes').append(divHead);
@@ -195,7 +231,45 @@ function showHideComments(divBodyId) {
 }
 
 
+function deleteAllComments(divBodyId) {
+    let deleteQuery = {
+        method: "DELETE",
+        url: baseService  + `/comments/` + `?query={"post_id":"${divBodyId.id}"}`,
+        headers: authHeaders
+    };
 
+    $.ajax(deleteQuery)
+        .then(successDeleteAllComments)
+        .then(displayError);
+
+
+    function successDeleteAllComments(deleteComments) {
+        //alert("Deleted all " + deleteComments.count + " comments");
+        //location.reload();
+        loadAllNotes();
+    }
+}
+
+
+
+function deleteCommentsFromAllPosts() {
+    let deleteQuery = {
+        method: "DELETE",
+        url: baseService  + `/comments/` + `?query={}`,
+        headers: authHeaders
+    };
+
+    $.ajax(deleteQuery)
+        .then(successDdeleteCommentsFromAllPosts)
+        .then(displayError);
+
+
+    function successDdeleteCommentsFromAllPosts(deleteComments) {
+        alert("Deleted all " + deleteComments.count + " comments");
+        //location.reload();
+        loadAllNotes();
+    }
+}
 
 
 
@@ -288,7 +362,7 @@ function addComment(e,divBodyId) {
     let commentElem = "#" + commentId;
     let comment = $(commentElem + ' #comments').val();
 
-    let data = {comment: comment, post_id: commentId}
+    let data = {comment: comment, post_id: commentId};
 
     let sendCommentQuery = {
         method: "POST",
@@ -333,6 +407,16 @@ function successfullAdded(str) {
 
     $('.successAdded').fadeOut(3000);
 }
+
+function successfullDell(str) {
+    let div = $('<div class="successAdded">');
+    div.text(str + " deleted successfully");
+    let container = $('#notesHeader');
+    container.prepend(div);
+
+    $('.successAdded').fadeOut(3000);
+}
+
 
 
 
