@@ -4,6 +4,18 @@
 
 $('#notes').hide();
 
+// $('.errorBox').click(function () {
+//     $(this).fadeOut(1000);
+// });
+
+hideElement('.errorBox');
+
+
+function hideElement(element) {
+    $(element).click(function () {
+        $(element).fadeOut(1000);
+    });
+}
 
 
 
@@ -72,6 +84,8 @@ function send() {
 
     if (!valid) {
         return;
+    }else {
+        $('.errorBox').hide();
     }
 
 
@@ -506,7 +520,9 @@ function validate() {
     if(noteHead == "" || noteHead == " " || noteHead.trim() == ""){
         $('#noteTitle').css({'border-color' :'red',
                              'background-color' : 'red'});
-        alert("Заглавието не може да бъде празно");
+        // alert("Заглавието не може да бъде празно");
+        $('.errorBox').text("Заглавието не може да бъде празно");
+        $('.errorBox').show();
         return false;
     }else {
         $('#noteTitle').css({'border-color' :'',
@@ -517,7 +533,8 @@ function validate() {
     if(noteHead.length == 1 || noteHead.length < 5){
         $('#noteTitle').css({'border-color' :'red',
             'background-color' : 'red'});
-        alert("Заглавието е твърде късо. Минимум 5 знака");
+        //alert("Заглавието е твърде късо. Минимум 5 знака");
+        $('.errorBox').text('Заглавието е твърде късо. Минимум 5 знака');
         return false;
     }else {
         $('#noteTitle').css({'border-color' :'',
@@ -529,7 +546,8 @@ function validate() {
     if(noteBody == "" || noteBody == " " || noteBody.trim() == ""){
         $('#noteBody').css({'border-color':'red',
                             'background-color':'red'});
-        alert("Описанието не може да бъде празно");
+        //alert("Описанието не може да бъде празно");
+        $('.errorBox').text('Описанието не може да бъде празно');
         return false;
     }else {
         $('#noteBody').css({'border-color':'',
@@ -539,7 +557,8 @@ function validate() {
     if(noteBody.length == 1 || noteBody.length < 5){
         $('#noteBody').css({'border-color' :'red',
             'background-color' : 'red'});
-        alert("Описанието е твърде късо. Минимум 5 знака");
+        //alert("Описанието е твърде късо. Минимум 5 знака");
+        $('.errorBox').text('Описанието е твърде късо. Минимум 5 знака');
         return false;
     }else {
         $('#noteBody').css({'border-color' :'',
